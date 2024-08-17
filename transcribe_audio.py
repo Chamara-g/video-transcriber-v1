@@ -74,12 +74,20 @@ def transcribe_audio(audio_file, output_dir, final_string, api_key):
 import os
 from groq import Groq
 
-def transcribe_audio(audio_file_path, api_key):
+def transcribe_audio(audio_file, api_key):
     client = Groq(api_key=api_key) 
-
+    '''
     # Transcribe the audio file
     translation = client.audio.translations.create(
-        file=open(audio_file_path, "rb"),  # Open the file in binary mode
+        #file=open(audio_file_path, "rb"),  # Open the file in binary mode
+        model="whisper-large-v3",
+        prompt="Specify context or spelling",  # Optional
+        response_format="json",  # Optional
+        temperature=0.0  # Optional
+    )
+    '''
+    translation = client.audio.translations.create(
+        file=audio_file,  # Pass the filename directly
         model="whisper-large-v3",
         prompt="Specify context or spelling",  # Optional
         response_format="json",  # Optional
